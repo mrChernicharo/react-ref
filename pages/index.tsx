@@ -16,8 +16,13 @@ export default function Home() {
   const passwordRef = useRef(null);
   const buttonRef = useRef(null);
 
-  function submitForm(e?: React.KeyboardEvent | React.MouseEvent) {
-    console.log(typeof e);
+  function enterKeySubmitForm(e: React.KeyboardEvent) {
+    console.log(e.code);
+    return e.code === 'Enter' ? submitForm() : '';
+  }
+
+  function submitForm() {
+    console.log('form submitted');
 
     const form = {
       name: nameRef.current.value,
@@ -65,7 +70,12 @@ export default function Home() {
         <input ref={passwordRef} onKeyPress={e => goToNextElement(e)} id="password" type="text" />
       </label>
 
-      <button ref={buttonRef} type="button" onClick={submitForm} onKeyPress={e => submitForm(e)}>
+      <button
+        ref={buttonRef}
+        type="button"
+        onClick={submitForm}
+        onKeyPress={e => enterKeySubmitForm(e)}
+      >
         Submit
       </button>
     </div>
